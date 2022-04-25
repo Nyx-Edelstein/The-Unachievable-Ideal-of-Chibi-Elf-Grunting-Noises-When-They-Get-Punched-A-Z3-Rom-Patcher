@@ -8,7 +8,7 @@ Patches an expanded ALTTP Japanese v1.0 ROM to replace Link's "oof" sound effect
 1. If you want to use your own sound, you will need a new .brr file exactly 576 bytes in length. To get this, I recommend using this tool (https://github.com/boldowa/snesbrr) and using the `--encode` function on a 16-bit signed PCM .wav at 12khz with an exact length of 0.085s. As for getting the .wav with the right specs, I recommend Audacity.
 2. You will need a (legally obtained) ALTTP Japanese version v1.0 ROM (expanded to 2mb).
 3. To use the default (feminine) voice, simply place your .sfc file by itself in the same directory as the executable and run it. Alternatively, run via command line with the same arguments below, but omit the `--brr` argument.
-4. To use a custom sample, run the executable via command line via `--rom romFilename --brr sampleFilename --output outputFilename` replacing the arguments with your file names.
+4. To use a custom sample, run the executable via command line with `--rom romFilename --brr sampleFilename --output outputFilename` replacing the arguments with your file names.
 
 The patcher does not do any checks on the rom aside from a basic header check and file size check. That is to say, if any other mods or patches touch the same bytes, this patch will conflict with it. Please note if there are any issues with compatibility and I will do what I can to accomodate.
 
