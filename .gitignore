@@ -1,0 +1,8 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/z3_oof_patcher/obj
+/z3_oof_patcher/Properties
+/z3_oof_patcher/.vs/z3_oof_patcher
