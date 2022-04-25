@@ -1,4 +1,5 @@
 # The Unachievable Ideal of Chibi Elf Grunting Noises When They Get Punched: A Z3 Rom Patcher
+## Aka: "z3_oof_patcher"
 
 Patches an expanded ALTTP Japanese v1.0 ROM to replace Link's "oof" sound effect with a custom version. By default, the patch uses a feminine voice effect.
 
@@ -7,12 +8,19 @@ Patches an expanded ALTTP Japanese v1.0 ROM to replace Link's "oof" sound effect
 1. If you want to use your own sound, you will need a new .brr file exactly 576 bytes in length. To get this, I recommend using this tool (https://github.com/boldowa/snesbrr) and using the `--encode` function on a 16-bit signed PCM .wav at 12khz with an exact length of 0.085s. As for getting the .wav with the right specs, I recommend Audacity.
 2. You will need a (legally obtained) ALTTP Japanese version v1.0 ROM (expanded to 2mb).
 3. To use the default (feminine) voice, simply place your .sfc file by itself in the same directory as the executable and run it. Alternatively, run via command line with the same arguments below, but omit the `--brr` argument.
-4. To use a custom sample, run the executable via command line via `--rom romFilename --brr sampleFilename --output outputFilename` replacing the arguments with your file names.
+4. To use a custom sample, run the executable via command line with `--rom romFilename --brr sampleFilename --output outputFilename` replacing the arguments with your file names.
 
 The patcher does not do any checks on the rom aside from a basic header check and file size check. That is to say, if any other mods or patches touch the same bytes, this patch will conflict with it. Please note if there are any issues with compatibility and I will do what I can to accomodate.
 
 Note that this patcher does not currently bother to fix the checksum. I may or may not get around to doing that.
 
+## Arguments:
+
+`--rom romFilename`: The rom file to patch. If not specified, the program will attempt to apply the default patch to the first .sfc file in the directory.
+
+`--brr sampleFilename`: (Optional) The 576 byte brr-encoded sample file. If not specified, the default feminine voice sample will be used.
+
+`--output outputFilename`: (Optional) A valid filename. If not specified, the output file will be called `"patched_"` + the input filename.
 
 ## How this works:
 
@@ -31,3 +39,7 @@ The main issue was that there was not enough room in the ROM where the SPC load 
 The changes I made to the routine are a bit on the bodgey side, but the logic is: detect when data transfer is complete but the CPU has not yet signaled to the SPC to cease loading and begin normal execution. At this point, load a new chunk that contains all the necessary data, then recover state and resume execution.
 
 The new chunk also contains an SPC subroutine modification starting at 0x1CF3C4 (the old routine, loaded from 0xCFCBE / 0x08F0 in SPU memory, has been moved here). As mentioned earlier, the only function of this modification is to detect when the "oof" sound should be played, and then change pointers to use the new sound sample.
+
+## What's with the project name?
+
+When I first proposed this idea on the ALTTPR discord, a dev there berated me for my approach. In their honor, I have named this project according to their flowery descriptions thereof, and have taken care to document everything as accessibly as possible.
