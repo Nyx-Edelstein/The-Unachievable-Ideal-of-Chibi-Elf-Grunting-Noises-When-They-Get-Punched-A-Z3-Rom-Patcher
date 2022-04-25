@@ -49,9 +49,9 @@ namespace z3_oof_patcher
                 while (e != null)
                 {
                     if (e is ProgramException)
-                        Console.WriteLine("Error:" + e.Message);
+                        Console.WriteLine("Error: " + e.Message);
                     else
-                        Console.WriteLine($"{e.GetType()}:" + e.Message);
+                        Console.WriteLine($"{e.GetType()}: " + e.Message);
                     Console.WriteLine(e.StackTrace);
                     e = e.InnerException;
                 }
