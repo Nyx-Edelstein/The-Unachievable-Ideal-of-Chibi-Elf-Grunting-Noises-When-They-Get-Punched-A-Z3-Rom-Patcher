@@ -1,0 +1,27 @@
+0xC8078 - 0xCFB17 - BRR-format sound effects and components
+(Byte boundaries are using Japanese 1.0 version, data begins: 02 00 00 00 00 00 00 00 00 6A 0F CE CC AA BA AB)
+	*  0: C8078 - C80C8	Noisy buzz (?)
+	*  1: C80C0 - C8869	Shallow water movement splashing (?)
+	*  2: C886A - C940C	Drum hit
+	*  3: C940D - C944B	Noise/Square wave (?)
+	*  4: C944C - C948A	Saw wave
+	*  5: C948B - C94ED	Sine wave (low frequency)
+	*  6: C94EE - C9585	Noisy buzz (?)
+	*  7: C9586 - C9620	Saw wave (noisy)
+	*  8: C9621 - C9B98	Squeeling sound (?) ("EEEE!")
+	*  9: C9B99 - CA924	Vibrating note (chorus vocals?)
+	* 10: CA925 - CAD49	Horn
+	* 11: CAD4A - CBAD6	Cymbal
+	* 12: CABD7 - CBC7A	Sine wave (high frequency)
+	* 13: CAC7B - CBD52	2 interfering sine waves (?)
+	* 14: CAD53 - CBF38	Triangle wave (?)
+	* 15: CBF39 - CC6F4	Item/fish splashing
+	* 16: CC6F5 - CCDFC	Brass
+	* 17: CCDFD - CD504	Horn, low frequency
+	* 18: CD505 - CE233	Cymbal, low frequency
+	* 19: CE234 - CEF2C	Oscillating note (chorus vocals?)
+	* 20: CEF2D - CF163	??? Some kind of interfering sine waves / Triangle wave?
+	* 21: CF164 - CF3A3	Link "oof" sound
+	* 22: CF3A4 - CFB17	Noisy triangle wave (?)
+
+Data ends: FC B9 BD 03 65 33 43 6B 0C AF 35 43 0E 14 53 42
