@@ -62,7 +62,7 @@ namespace z3_oof_patcher
         {
             var romFilename = "";
 
-            var files = Directory.GetFiles(".\\");
+            var files = Directory.GetFiles("./");
             var firstRomFile = files.FirstOrDefault(x => x.EndsWith(".sfc"));
 
             if (firstRomFile == null)
@@ -77,7 +77,7 @@ namespace z3_oof_patcher
             byte[] bytes;
             try
             {
-                var fileStream = File.OpenRead($".\\{romFilename}");
+                var fileStream = File.OpenRead($"./{romFilename}");
                 using var ms = new MemoryStream();
                 fileStream.CopyTo(ms);
                 bytes = ms.ToArray();
