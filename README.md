@@ -16,7 +16,7 @@ Note that this patcher does not currently bother to fix the checksum. I may or m
 
 ## Arguments:
 
-`--rom romFilename`: The rom file to patch. If not specified, the program will attempt to apply the default patch to the lexographically first .sfc file in the directory.
+`--rom romFilename`: The rom file to patch. If not specified, the program will attempt to apply the default patch to the first .sfc file in the directory.
 
 `--brr sampleFilename`: (Optional) The 576 byte brr-encoded sample file. If not specified, the default feminine voice sample will be used.
 
