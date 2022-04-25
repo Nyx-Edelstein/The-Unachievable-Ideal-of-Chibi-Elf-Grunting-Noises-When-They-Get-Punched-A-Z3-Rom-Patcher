@@ -14,6 +14,13 @@ The patcher does not do any checks on the rom aside from a basic header check an
 
 Note that this patcher does not currently bother to fix the checksum. I may or may not get around to doing that.
 
+## Arguments:
+
+`--rom romFilename`: The rom file to patch. If not specified, the program will attempt to apply the default patch to the lexographically first .sfc file in the directory.
+
+`--brr sampleFilename`: (Optional) The 576 byte brr-encoded sample file. If specified, `romFilename` must also be specified. If not specified, the default feminine voice sample will be used.
+
+`--output outputFilename`: (Optional) A valid filename. If specified, `romFilename` must also be specified. If not specified, the output file will be called `"patched_"` + the input filename.
 
 ## How this works:
 
@@ -32,3 +39,7 @@ The main issue was that there was not enough room in the ROM where the SPC load 
 The changes I made to the routine are a bit on the bodgey side, but the logic is: detect when data transfer is complete but the CPU has not yet signaled to the SPC to cease loading and begin normal execution. At this point, load a new chunk that contains all the necessary data, then recover state and resume execution.
 
 The new chunk also contains an SPC subroutine modification starting at 0x1CF3C4 (the old routine, loaded from 0xCFCBE / 0x08F0 in SPU memory, has been moved here). As mentioned earlier, the only function of this modification is to detect when the "oof" sound should be played, and then change pointers to use the new sound sample.
+
+## What's with the project name?
+
+When I first proposed this idea on the ALTTPR discord, a dev there berated me for my approach. In their honor, I have named this project according to their flowery descriptions thereof, and have taken care to document everything as accessibly as possible.
