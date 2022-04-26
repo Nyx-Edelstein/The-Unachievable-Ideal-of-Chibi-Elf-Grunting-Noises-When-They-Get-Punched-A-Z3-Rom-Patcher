@@ -183,19 +183,20 @@
             ////Presumably ALTTPR
             //if (!archipelago)
             //{
-                //Change the pointer for instrument $9 in SPC memory to point to the new data we'll be inserting:
+                //Change the pointer for instrument 9 in SPC memory to point to the new data we'll be inserting:
                 patches.Add(new Patch(0xC806C, "88310000"));
 
-                //Insert a sigil so we can branch on it later; this overwrites unused data
+                //Insert a sigil so we can branch on it later
+                //We will recover the value it overwrites after we're done with insertion
                 patches.Add(new Patch(0xCFB18, "BEBE"));
 
-                //Change the "oof" sound effect to use instrument $9:
+                //Change the "oof" sound effect to use instrument 9:
                 patches.Add(new Patch(0xD1BF5, "09"));
 
-                //Correct pitch shift value:
+                //Correct the pitch shift value:
                 patches.Add(new Patch(0xD1BF8, "B6"));
 
-                //Modify parameters of instrument $9
+                //Modify parameters of instrument 9
                 //(I don't actually understand this part, they're just magic values to me)
                 patches.Add(new Patch(0xD1C55, "7F7F00101A00007F01"));
 
