@@ -26,11 +26,11 @@ Note that this patcher does not currently bother to fix the checksum. I may or m
 
 ## How this works:
 
-An additional .brr sample the same size as the original "oof" sound is embedded into the rom. On boot, it is then loaded into SPC memory and only played when Link takes damage, thus leaving the old sample untouched (otherwise the cucco sound would also be modified).
+An additional .brr sample is embedded into the rom. On boot, it is then loaded into SPC memory and only played when Link takes damage, thus leaving the old sample untouched (otherwise the cucco sound would also be modified).
 
 ## Does it affect race timings?
 
-No; all CPU load takes place at the initial boot phase and everything following that is identical instructions. The sound switching is done by the SPC, and works by simply changing pointers at the correct moments (i.e. - negligible SPC load).
+No; all CPU load takes place at the initial boot phase and everything following that is identical instructions.
 
 ## High-level explanation of changes:
 
