@@ -17,7 +17,7 @@
                     case "--rom":
                         romFilename = args[i + 1];
                         break;
-                    case "--sample":
+                    case "--brr":
                         sampleFilename = args[i + 1];
                         break;
                     case "--output":
