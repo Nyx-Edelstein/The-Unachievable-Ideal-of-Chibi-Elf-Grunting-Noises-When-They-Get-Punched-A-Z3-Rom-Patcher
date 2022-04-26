@@ -20,7 +20,7 @@ Note that this patcher does not currently bother to fix the checksum. I may or m
 
 `--rom romFilename`: The rom file to patch. If not specified, the program will attempt to apply the default patch to the first .sfc file in the directory.
 
-`--brr sampleFilename`: (Optional) The 576 byte brr-encoded sample file. If not specified, `default.brr` will be used. This is included in release but you can of course overwrite it with whatever you prefer to use.
+`--brr sampleFilename`: (Optional) The brr-encoded sample file. If not specified, `default.brr` will be used. This is included in release but you can of course overwrite it with whatever you prefer to use. Maximum of 2672 bytes.
 
 `--output outputFilename`: (Optional) A valid filename. If not specified, the output file will be called `"patched_"` + the input filename.
 
