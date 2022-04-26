@@ -5,9 +5,9 @@ Patches an expanded ALTTP Japanese v1.0 ROM to replace Link's "oof" sound effect
 
 ## How to use:
 
-1. If you want to use your own sound, you will need a new .brr file exactly 576 bytes in length. To get this, I recommend using this tool (https://github.com/boldowa/snesbrr) and using the `--encode` function on a 16-bit signed PCM .wav at 12khz with an exact length of 0.085s. As for getting the .wav with the right specs, I recommend Audacity. You could edit a sample you've obtained elsewhere, or use your own. Grunt into your mic to your heart's content!
+1. If you want to use your own sound, you will need a new .brr file encoding the sound. To get this, I recommend using this tool (https://github.com/boldowa/snesbrr) and using the `--encode` function on a 16-bit signed PCM .wav at 12khz. The .brr file cannot exceed 2672 bytes, which equates to a maximum of 296 blocks. The longest .wav file you can use is therefore around 0.394s. As for getting the .wav with the right specs, I recommend Audacity. You could edit a sample you've obtained elsewhere, or use your own. Grunt into your mic to your heart's content!
 2. You will need a (legally obtained) ALTTP Japanese version v1.0 ROM (expanded to 2mb).
-3. To use the default (feminine) voice, simply place your .sfc file by itself in the same directory as the executable and run it. Alternatively, run via command line with the same arguments below, but omit the `--brr` argument.
+3. To use the default feminine voice (`default.brr`), simply place your .sfc file by itself in the same directory as the executable and run it. Alternatively, run via command line with the same arguments below, but omit the `--brr` argument.
 4. To use a custom sample, run the executable via command line with `--rom romFilename --brr sampleFilename --output outputFilename` replacing the arguments with your file names.
 
 The patcher does not do any checks on the rom aside from a basic header check and file size check. That is to say, if any other mods or patches touch the same bytes, this patch will conflict with it. Please note any issues with compatibility and I will do what I can to accomodate.
@@ -18,7 +18,7 @@ Note that this patcher does not currently bother to fix the checksum. I may or m
 
 `--rom romFilename`: The rom file to patch. If not specified, the program will attempt to apply the default patch to the first .sfc file in the directory.
 
-`--brr sampleFilename`: (Optional) The 576 byte brr-encoded sample file. If not specified, the default feminine voice sample will be used.
+`--brr sampleFilename`: (Optional) The 576 byte brr-encoded sample file. If not specified, `default.brr` will be used. This is included in release but you can of course overwrite it with whatever you prefer to use.
 
 `--output outputFilename`: (Optional) A valid filename. If not specified, the output file will be called `"patched_"` + the input filename.
 
@@ -32,14 +32,14 @@ No; all CPU load takes place at the initial boot phase and everything following 
 
 ## High-level explanation of changes:
 
-The SPC load routine, starting at 0x888, is relocated to 0x1C8888 to give room to expand. The logic of the load routine is quite complex and highly optimised, but it essentially serves to load in all of the sound data into SPU memory at game boot. It does this in chunks by communicating to the SPC the number of bytes in the chunk and the address in SPC memory where that data should go, and then loops through, sending the bytes in synchronicity over the CPU/SPC I/O channels and waiting for the SPC to ack at every step.
+A patch is applied which alters the SPC data load routine to insert the new sample at the largest contiguous block in SPC memory; i.e. $3188. This space is technically used by the credits song at the end of the game, but since at that point we don't care about the "oof" sound anymore, we can use it freely.
 
-The main issue was that there was not enough room in the ROM where the SPC load data is stored to embed a new sample. Thus the sample had to be located elsewhere and the load routine modified to include it. Fortunately on the SPC side, there was plenty of unused memory directly following where the main data is stored (i.e. starting at 0xBAA0 in SPC memory).
+Via kan:
 
-The changes I made to the routine are a bit on the bodgey side, but the logic is: branch when data transfer is complete but the CPU has not yet signaled to the SPC to cease loading and begin normal execution, load a new chunk that contains all the necessary data, then recover state and resume execution.
+```The sample is assigned to sound effect instrument 09, which is the only predefined instrument not used by any of the existing sound effects. The instrument assigned to SFX2.26 is then set to 09 to make use of the new sound effect without corrupting the noise chickens make.```
 
-The new chunk also contains an SPC subroutine modification starting at 0x1CF3C4 (the old routine, loaded from 0xCFCBE / 0x08F0 in SPU memory, has been moved here). As mentioned earlier, the only function of this modification is to detect when the "oof" sound should be played, and then change pointers to use the new sound sample.
+(Credit to kan for this approach. It's more elegant than my previous method, which had the SPU dynamically altering pointer tables and required modifying base code.)
 
 ## What's with the project name?
 
-When I first proposed this idea on the ALTTPR discord, a dev there had some choice words for me and my approach. In their honor, I have named this project according to their flowery descriptions thereof.
+When I first proposed this idea on the ALTTPR discord, a dev there (*cough*) had some choice words for me and my idea. In their honor, I have named this project according to their flowery descriptions thereof.
