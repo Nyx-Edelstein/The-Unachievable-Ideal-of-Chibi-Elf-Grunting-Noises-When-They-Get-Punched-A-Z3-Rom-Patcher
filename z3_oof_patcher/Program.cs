@@ -23,7 +23,14 @@
                     case "--output":
                         outputFilename = args[i + 1];
                         break;
+                    default:
+                        if (arg.StartsWith("--"))
+                        {
+                            throw new ProgramException($"Unrecognized parameter: {arg}");
+                        }
+                        break;
                 }
+                
             }
 
             //foreach (var arg in args)
