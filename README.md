@@ -34,11 +34,11 @@ No; all CPU load takes place at the initial boot phase and everything following 
 
 A patch is applied which alters the SPC data load routine to insert the new sample at the largest contiguous block in SPC memory; i.e. $3188. This space is technically used by the credits song at the end of the game, but since at that point we don't care about the "oof" sound anymore, we can use it freely.
 
-Via kan:
+Via `witch princess kan`:
 
 ```The sample is assigned to sound effect instrument 09, which is the only predefined instrument not used by any of the existing sound effects. The instrument assigned to SFX2.26 is then set to 09 to make use of the new sound effect without corrupting the noise chickens make.```
 
-(Credit to kan for this approach. It's more elegant than my previous method, which had the SPU dynamically altering pointer tables and required modifying base code.)
+(Credit to witch princess kan for this approach. It's more elegant than my previous method, which had the SPU dynamically altering pointer tables and required modifying base code.)
 
 ## What's with the project name?
 
