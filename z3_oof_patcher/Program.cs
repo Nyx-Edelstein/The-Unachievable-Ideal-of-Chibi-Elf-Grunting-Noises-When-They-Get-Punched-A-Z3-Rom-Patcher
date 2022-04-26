@@ -26,7 +26,8 @@
                     default:
                         if (arg.StartsWith("--"))
                         {
-                            throw new ProgramException($"Unrecognized parameter: {arg}");
+                            Console.WriteLine($"Unrecognized parameter: {arg}");
+                            return;
                         }
                         break;
                 }
