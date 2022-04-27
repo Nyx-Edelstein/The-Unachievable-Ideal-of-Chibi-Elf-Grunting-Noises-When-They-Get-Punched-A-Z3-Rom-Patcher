@@ -188,7 +188,8 @@
 
                 //Insert a sigil so we can branch on it later
                 //We will recover the value it overwrites after we're done with insertion
-                patches.Add(new Patch(0xCFB18, "BEBE"));
+                //patches.Add(new Patch(0xCFB18, "BEBE"));
+                patches.Add(new Patch(0xD5333, "BEBE"));
 
                 //Change the "oof" sound effect to use instrument 9:
                 patches.Add(new Patch(0xD1BF5, "09"));
@@ -207,7 +208,7 @@
                 // * Another sigil "$EBEB" is inserted at the end of the data
                 // * When the second sigil is read, we know we're done inserting our data so we can change the data pointer back
                 // * Effect: The new data gets loaded into SPC memory without having to relocate the SPC load routine
-                var byteStr = $"B700C8C8C9BEBEF009C9EBEBF01B5CD38800A2{XXXX}A980258501A93A808500A00000A988315CD88800A9801964008501A2AE00A01A7B5CD48800";
+                var byteStr = $"B700C8C8C9BEBEF009C9EBEBF01B5CD38800A2{XXXX}A980258501A93A808500A00000A988315CD88800A9801A64008501A20000A035535CD48800";
                 patches.Add(new Patch(0x128000, byteStr));
             //}
             //else
@@ -229,6 +230,11 @@
             //The new sample data
             //(We need to insert the second sigil at the end)
             patches.Add(new Patch(0x12803A, Convert.ToHexString(customSample) + "EBEB"));
+
+
+            //Temp patch for compatibility with enemy randomizer: prevent it from overwriting $3188 in SPC memory with an unused sound
+            //(I am given to believe this will be fixed soon)
+            patches.Add(new Patch(0x13000D, "00000008"));
 
             return patches;
         }
