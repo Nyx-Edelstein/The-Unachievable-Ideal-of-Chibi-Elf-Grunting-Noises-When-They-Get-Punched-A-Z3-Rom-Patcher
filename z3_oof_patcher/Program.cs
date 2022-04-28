@@ -34,11 +34,11 @@
                 
             }
 
-            //foreach (var arg in args)
-            //{
-            //    if (arg == "--ap")
-            //        archipelago = true;
-            //}
+            foreach (var arg in args)
+            {
+                if (arg == "--ap")
+                    archipelago = true;
+            }
 
             try
             {
@@ -181,8 +181,8 @@
             patches.Add(new Patch(0x8CF, "5C008025"));
 
             ////Presumably ALTTPR
-            //if (!archipelago)
-            //{
+            if (!archipelago)
+            {
                 //Change the pointer for instrument 9 in SPC memory to point to the new data we'll be inserting:
                 patches.Add(new Patch(0xC806C, "88310000"));
 
@@ -210,31 +210,28 @@
                 // * Effect: The new data gets loaded into SPC memory without having to relocate the SPC load routine
                 var byteStr = $"B700C8C8C9BEBEF009C9EBEBF01B5CD38800A2{XXXX}A980258501A93A808500A00000A988315CD88800A9801A64008501A20000A035535CD48800";
                 patches.Add(new Patch(0x128000, byteStr));
-            //}
-            //else
-            //{
-            //    //Offsets need to change to accommodate archipelago roms; otherwise same as the above
 
-            //    //We actually can't use $3188 in SPC memory because it's in use by something else
-            //    //Have to use the smaller buffer from $BAA0 to $BFF0 instead
-            //    patches.Add(new Patch(0x1A006C, "A0BA0000"));
-            //    patches.Add(new Patch(0x1A7B18, "BEBE"));
-            //    patches.Add(new Patch(0x1A9C4E, "09"));
-            //    patches.Add(new Patch(0x1A9C51, "B6"));
-            //    patches.Add(new Patch(0x1A9CAE, "7F7F00101A00007F01"));
-                
-            //    var byteStr = $"B700C8C8C9BEBEF009C9EBEBF01B5CD38800A2{XXXX}A980258501A93A808500A00000A9A0BA5CD88800A9801964008501A2AE00A01A7B5CD48800";
-            //    patches.Add(new Patch(0x128000, byteStr));
-            //}
+                //Temp patch for compatibility with enemy randomizer: prevent it from overwriting $3188 in SPC memory with an unused sound
+                //(I am given to believe this will be fixed soon)
+                patches.Add(new Patch(0x13000D, "00000008"));
+            }
+            else
+            {
+                //Offsets need to change to accommodate archipelago roms; otherwise same as the above
+                patches.Add(new Patch(0x1A006C, "88310000"));
+                patches.Add(new Patch(0x1AD38C, "BEBE"));
+                patches.Add(new Patch(0x1A9C4E, "09"));
+                patches.Add(new Patch(0x1A9C51, "B6"));
+                patches.Add(new Patch(0x1A9CAE, "7F7F00101A00007F01"));
+
+                //Slightly different here: We need to change the data pointer to $00 00 35 and load 538E into Y to pick back up where we left off
+                var byteStr = $"B700C8C8C9BEBEF009C9EBEBF01B5CD38800A2{XXXX}A980258501A93A808500A00000A988315CD88800A9803564008501A20000A08E535CD48800";
+                patches.Add(new Patch(0x128000, byteStr));
+            }
 
             //The new sample data
             //(We need to insert the second sigil at the end)
             patches.Add(new Patch(0x12803A, Convert.ToHexString(customSample) + "EBEB"));
-
-
-            //Temp patch for compatibility with enemy randomizer: prevent it from overwriting $3188 in SPC memory with an unused sound
-            //(I am given to believe this will be fixed soon)
-            patches.Add(new Patch(0x13000D, "00000008"));
 
             return patches;
         }
