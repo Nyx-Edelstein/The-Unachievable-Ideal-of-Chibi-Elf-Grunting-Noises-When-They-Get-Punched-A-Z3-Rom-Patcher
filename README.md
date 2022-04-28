@@ -16,6 +16,10 @@ The patcher does not do any checks on the rom aside from a basic header check an
 
 Note that this patcher does not currently bother to fix the checksum. I may or may not get around to doing that.
 
+## Archipelago:
+
+To use this when patching an Archipelago (Multiworld) rom, you MUST supply the argument `--ap`. Otherwise it will not work.
+
 ## Arguments:
 
 `--rom romFilename`: The rom file to patch. If not specified, the program will attempt to apply the default patch to the first .sfc file in the directory.
@@ -23,6 +27,8 @@ Note that this patcher does not currently bother to fix the checksum. I may or m
 `--brr sampleFilename`: (Optional) The brr-encoded sample file. If not specified, `default.brr` will be used. This is included in release but you can of course overwrite it with whatever you prefer to use. Maximum of 2672 bytes.
 
 `--output outputFilename`: (Optional) A valid filename. If not specified, the output file will be called `"patched_"` + the input filename.
+
+`--ap`: Patch an Archipelago rom. (The offsets are different than VT/Randomizer)
 
 ## How this works:
 
